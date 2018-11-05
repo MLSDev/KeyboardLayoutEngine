@@ -1,4 +1,4 @@
-//
+﻿//
 //  KeyboardButton.swift
 //  KeyboardLayoutEngine
 //
@@ -296,16 +296,27 @@ open class KeyboardButton: UIView {
     content.frame.origin.y = -(content.frame.size.height + padding)
     content.layer.cornerRadius = style.cornerRadius * style.keyPopWidthMultiplier
     content.clipsToBounds = true
+    
+    let offset: CGFloat = max(0, frame.minX + content.frame.width - superview!.frame.maxX)
+    
+    let roundedCorners: UIRectCorner
+    
+    switch offset {
+    case 0:
+        roundedCorners = [.topLeft, .topRight, .bottomRight]
+    default:
+        roundedCorners = [.topLeft, .topRight, .bottomRight, .bottomLeft]
+    }
 
     let bottomRect = CGRect(
-      x: 0,
+      x: offset,
       y: -padding - 1, // a little hack for filling the gap
       width: frame.size.width,
       height: frame.size.height + padding)
 
     let path = UIBezierPath(
       roundedRect: content.frame,
-      byRoundingCorners: [.topLeft, .topRight, .bottomRight],
+      byRoundingCorners: roundedCorners,
       cornerRadii: CGSize(
         width: style.cornerRadius * style.keyPopWidthMultiplier,
         height: style.cornerRadius * style.keyPopHeightMultiplier))
@@ -323,7 +334,7 @@ open class KeyboardButton: UIView {
 
     let popup = UIView(
       frame: CGRect(
-        x: 0,
+        x: -(offset),
         y: 0,
         width: content.frame.size.width,
         height: content.frame.size.height + padding + frame.size.height))
