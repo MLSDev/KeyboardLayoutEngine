@@ -63,9 +63,11 @@ internal class KeyboardButtonTouch {
 // MARK: - KeyboardLayoutStyle
 public struct KeyboardLayoutStyle {
   public var backgroundColor: UIColor
+  public var margins: UIEdgeInsets
 
-  public init(backgroundColor: UIColor? = nil) {
+    public init(backgroundColor: UIColor? = nil, margins: UIEdgeInsets? = nil) {
     self.backgroundColor = backgroundColor ?? UIColor(red: 208.0/255.0, green: 213.0/255.0, blue: 219.0/255.0, alpha: 1)
+        self.margins = margins ?? .zero
   }
 }
 
@@ -104,12 +106,12 @@ open class KeyboardLayout: UIView {
     superview?.backgroundColor = style.backgroundColor
 
     let optimumRowHeight = getOptimumRowHeight()
-    var currentY: CGFloat = 0
+    var currentY: CGFloat = self.style.margins.top
     for row in rows {
       row.isPortrait = isPortrait
       currentY += isPortrait ? row.style.topPadding : row.style.topPaddingLandscape
       row.frame = CGRect(
-        x: 0,
+        x: self.style.margins.left,
         y: currentY,
         width: frame.size.width,
         height: optimumRowHeight)
@@ -126,7 +128,7 @@ open class KeyboardLayout: UIView {
   }
 
   fileprivate func getOptimumRowHeight() -> CGFloat {
-    let height = frame.size.height
+    let height = frame.size.height - self.style.margins.top
     let totalPaddings = getRowPaddings()
     return max(0, (height - totalPaddings) / CGFloat(rows.count))
   }
@@ -229,14 +231,16 @@ open class KeyboardLayout: UIView {
     super.touchesEnded(touches, with: event)
     delegate?.keyboardLayout?(self, didTouchesEnd: touches)
 
-    if !typingEnabled {
-      return
-    }
+//    if !typingEnabled {
+//      return
+//    }
 
     for touch in touches {
       if let currentTouch = currentTouches.filter({ $0.touch == touch.key }).first {
         currentTouch.button.showKeyPop(show: false)
-        delegate?.keyboardLayout?(self, didKeyPressEnd: currentTouch.button)
+        if typingEnabled {
+            delegate?.keyboardLayout?(self, didKeyPressEnd: currentTouch.button)
+        }
         currentTouches = currentTouches.filter({ $0.touch != touch.key })
       }
     }
