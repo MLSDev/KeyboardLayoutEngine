@@ -321,7 +321,7 @@ optional func defaultKeyboardDidPressReturnButton(defaultKeyboard: DefaultKeyboa
   #
 
   # s.platform     = :ios
-  s.platform     = :ios, "11.3"
+  s.platform     = :ios, "11.0"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
