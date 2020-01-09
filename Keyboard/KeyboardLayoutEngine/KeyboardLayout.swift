@@ -31,7 +31,7 @@ extension Collection {
 
 // MARK: - UITouch Extension
 internal extension UITouch {
-  internal var key: String {
+  var key: String {
     return "\(Unmanaged.passUnretained(self).toOpaque())"
   }
 }

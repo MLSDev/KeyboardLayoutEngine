@@ -1,4 +1,4 @@
-﻿//
+//
 //  KeyboardButton.swift
 //  KeyboardLayoutEngine
 //
@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Shadow
 
 // MARK: - KeyboardButtonType
 public enum KeyboardButtonType {
@@ -345,7 +344,7 @@ open class KeyboardButton: UIView {
 
   // MARK: Hit Test
   open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-    let hitFrame = UIEdgeInsetsInsetRect(bounds, hitRangeInsets)
+    let hitFrame = bounds.inset(by: hitRangeInsets)
     return hitFrame.contains(point)
   }
 }

@@ -192,11 +192,11 @@ open class KeyboardRow: UIView {
 
   // MARK: Hit Test
   open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-    if UIEdgeInsetsEqualToEdgeInsets(buttonHitRangeInsets, UIEdgeInsets.zero) {
+    if buttonHitRangeInsets == UIEdgeInsets.zero {
       return super.point(inside: point, with: event)
     }
 
-    let hitFrame = UIEdgeInsetsInsetRect(bounds, buttonHitRangeInsets)
+    let hitFrame = bounds.inset(by: buttonHitRangeInsets)
     return hitFrame.contains(point)
   }
 }

@@ -6,6 +6,24 @@
 //  Copyright © 2016 Prototapp. All rights reserved.
 //
 
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the "Software"),
+// to deal in the Software without restriction, including without limitation
+// the rights to use, copy, modify, merge, publish, distribute, sublicense,
+// and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+// THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+
 import UIKit
 
 /// Defines a shadow object for `CALayer` shadows.
@@ -41,13 +59,13 @@ public struct Shadow {
 public extension CALayer {
   /// Applys shadow if given object is not nil.
   /// Removes shadow if given object is nil.
-  public func applyShadow(shadow: Shadow? = nil) {
+  func applyShadow(shadow: Shadow? = nil) {
     shadowColor = shadow?.color.cgColor ?? UIColor.clear.cgColor
     shadowOpacity = shadow?.opacity ?? 0
     if let shadow = shadow {
       if let path = shadow.path {
-        shadowRadius = shadow.radius 
-        shadowOffset = shadow.offset 
+        shadowRadius = shadow.radius
+        shadowOffset = shadow.offset
         shadowPath = path.cgPath
       } else {
         var shadowRect = bounds
@@ -73,7 +91,7 @@ public extension CALayer {
 public extension UIView {
   /// Applys shadow on its layer if given object is not nil.
   /// Removes shadow on its layer if given object is nil.
-  public func applyShadow(shadow: Shadow? = nil) {
+  func applyShadow(shadow: Shadow? = nil) {
     layer.applyShadow(shadow: shadow)
   }
 }
